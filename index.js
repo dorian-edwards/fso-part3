@@ -43,6 +43,14 @@ app.get('/api/persons', (req, res) => {
   res.json(persons)
 })
 
+app.get('/api/persons/:id', (req, res) => {
+  const id = Number(req.params.id)
+  const person = persons.find((p) => p.id === id)
+
+  if (!person) return res.status(404).send('<p>404 Not found</p>')
+  res.json(person)
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT}`)
 })
