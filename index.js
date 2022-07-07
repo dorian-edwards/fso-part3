@@ -53,9 +53,16 @@ app.post('/api/persons', (req, res) => {
   const body = req.body
   if (!body.name || !body.number) {
     return res.status(400).json({
-      error: 'Incomplete Entry',
+      error: 'incomplete Entry',
     })
   }
+
+  if (persons.find((p) => p.name.toLowerCase() === body.name.toLowerCase())) {
+    return res.status(400).json({
+      error: 'name must be unique',
+    })
+  }
+
   const newPerson = {
     id: generateID(),
     name: body.name,
