@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3001
 
 const persons = [
   {
@@ -27,6 +27,16 @@ const persons = [
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world!</h1>')
+})
+
+app.get('/info', (req, res) => {
+  const count = persons.length
+  const date = new Date().toString()
+
+  const conjugate = count === 1 ? 'person' : 'people'
+  res.send(
+    `<p>Phone book has info for ${count + ' ' + conjugate}</p><p>${date}</p>`
+  )
 })
 
 app.get('/api/persons', (req, res) => {
