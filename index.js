@@ -25,6 +25,12 @@ let persons = [
   },
 ]
 
+function generateID() {
+  return Math.floor(Math.random() * 2 ** 52)
+}
+
+app.use(express.json())
+
 app.get('/', (req, res) => {
   res.send('<h1>Hello world!</h1>')
 })
@@ -41,6 +47,23 @@ app.get('/info', (req, res) => {
 
 app.get('/api/persons', (req, res) => {
   res.json(persons)
+})
+
+app.post('/api/persons', (req, res) => {
+  const body = req.body
+  if (!body.name || !body.number) {
+    return res.status(400).json({
+      error: 'Incomplete Entry',
+    })
+  }
+  const newPerson = {
+    id: generateID(),
+    name: body.name,
+    number: body.number,
+  }
+
+  persons = persons.concat(newPerson)
+  return res.status(201).json(newPerson)
 })
 
 app.get('/api/persons/:id', (req, res) => {
