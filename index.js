@@ -30,8 +30,14 @@ function generateID() {
   return Math.floor(Math.random() * 2 ** 52)
 }
 
+morgan.token('data', (req, res) => {
+  return Object.keys(req.body).length !== 0 && JSON.stringify(req.body)
+})
+
 app.use(express.json())
-app.use(morgan('tiny'))
+app.use(
+  morgan(':method :url :status :res[content-length] - :response-time ms :data')
+)
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world!</h1>')
