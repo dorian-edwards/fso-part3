@@ -100,7 +100,7 @@ app.put('/api/persons/:id', (req, res) => {
   const newNumber = req.body.number
   const newPerson = { ...person, number: newNumber }
 
-  let persons = persons.map((p) => (p.id !== id ? p : newPerson))
+  persons = persons.map((p) => (p.id !== id ? p : newPerson))
   return res.json(newPerson)
 })
 
