@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 const PORT = process.env.PORT || 3001
 
 let persons = [
@@ -30,6 +31,7 @@ function generateID() {
 }
 
 app.use(express.json())
+app.use(morgan('tiny'))
 
 app.get('/', (req, res) => {
   res.send('<h1>Hello world!</h1>')
